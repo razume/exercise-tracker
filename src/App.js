@@ -18,7 +18,14 @@ function App() {
     chest: false,
     back: false
   });
+
   const [exercises, setExercises] = useState([]);
+
+  const handleChange = e => {
+    const name = e.target.name;
+    const updateObj = { ...exercise, [name]: e.target.value };
+    setExercise(updateObj);
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -27,26 +34,31 @@ function App() {
   return (
     <div>
       <form onSubmit={handleSubmit} className="new-workout">
-        <input placeholder="date" onChange={} />
-        <input placeholder="workout name" />
-        <label>Sets</label>
-        <select>
-          {repsAndSets.map(setIdx => {
-            return <option>{setIdx}</option>;
-          })}
-        </select>
-        <label>Reps</label>
-        <select>
-          {repsAndSets.map(repIdx => {
-            return <option>{repIdx}</option>;
-          })}
-        </select>
+        <input placeholder="date" name="date" onChange={handleChange} />
+        <input placeholder="workout name" name="name" onChange={handleChange} />
+        <label>
+          Sets
+          <select name="sets" onChange={handleChange}>
+            {repsAndSets.map(setIdx => {
+              return <option>{setIdx}</option>;
+            })}
+          </select>
+        </label>
+
+        <label>
+          Reps
+          <select name="reps" onChange={handleChange}>
+            {repsAndSets.map(repIdx => {
+              return <option>{repIdx}</option>;
+            })}
+          </select>
+        </label>
 
         <label>Muscle group(s)</label>
         {muscleGroups.map(muscleGroup => {
           return (
             <div>
-              <input type="checkbox"></input>
+              <input onChange={handleChange} type="checkbox"></input>
               <label>{muscleGroup}</label>
             </div>
           );
